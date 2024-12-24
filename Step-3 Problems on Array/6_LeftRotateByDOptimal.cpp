@@ -3,7 +3,7 @@ using namespace std;
 
 // TC : O(d) + O(n-d) + O(n) => O(2n) => O(n)
 // SC : O(1)
-void leftRotatebyOne(vector<int> &arr, int d)
+void leftRotatebyD(vector<int> &arr, int d)
 {
     int n = arr.size();
     d = d % n; // Handle cases where d > n
@@ -24,7 +24,7 @@ int main()
     {
         cout << i << " ";
     }
-    leftRotatebyOne(arr, 3);
+    leftRotatebyD(arr, 3);
     cout << "Left Rotated Array by 3 elements : " << endl;
     for (auto i : arr)
     {
