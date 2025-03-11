@@ -1,39 +1,51 @@
+// Given an array that contains positive, negative, and zero elements, we need to find the longest subarray whose sum is exactly K.
+// prefixSum[i] = a[0] +a[1] +... + a[i]
+// Using the prefix sum, we can compute the sum of any subarray efficiently:
+// sum from index l to r= prefixSum[r] - prefixSum[l-1]
+// Dry Run Example
+// Let's dry run the array arr = {10, -5, 2, -3, 7, 5, -3, 1, 3} with K = 7.
+// Index  |	Element  |	Prefix Sum	  |     Action
+// 0	    10	10	    Store               10 → 0
+// 1	    -5	5	    Store               5 → 1
+//! 2	    2	7	    Prefix Sum = K, maxLen = 3
+// 3	    -3	4	    Store               4 → 3
+//! 4	    7	11	    Found prefixSum - K = 4 in map, maxLen = 4 - 3 = 3
+// 5	    5	16	    Store               16 → 5
+// 6	    -3	13      Store               13 → 6
+// 7	    1	14	    Store               14 → 7
+//! 8	    3	17	    Found prefixSum - K = 10 in map, maxLen = 8 - 0 = 8
+//! so the answer is 8 !!
 
+// TC & SC : O(n)
 #include <bits/stdc++.h>
+
 using namespace std;
 
-int getLongestSubarray(vector<int> &a, int k)
+int longestSubarrayWithSumK(vector<int> &arr, int k)
 {
-    int n = a.size(); // size of the array.
+    unordered_map<int, int> prefixMap; // Stores prefixSum -> first occurrence index
+    int prefixSum = 0, maxLen = 0;
 
-    map<int, int> preSumMap;
-    int sum = 0;
-    int maxLen = 0;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < arr.size(); i++)
     {
-        // calculate the prefix sum till index i:
-        sum += a[i];
+        prefixSum += arr[i];
 
-        // if the sum = k, update the maxLen:
-        if (sum == k)
+        // Case 1: If sum from 0 to i is already k
+        if (prefixSum == k)
         {
-            maxLen = max(maxLen, i + 1);
+            maxLen = i + 1;
         }
 
-        // calculate the sum of remaining part i.e. x-k:
-        int rem = sum - k;
-
-        // Calculate the length and update maxLen:
-        if (preSumMap.find(rem) != preSumMap.end())
+        // Case 2: If prefixSum - k exists in the map, update maxLen
+        if (prefixMap.find(prefixSum - k) != prefixMap.end())
         {
-            int len = i - preSumMap[rem];
-            maxLen = max(maxLen, len);
+            maxLen = max(maxLen, i - prefixMap[prefixSum - k]);
         }
 
-        // Finally, update the map checking the conditions:
-        if (preSumMap.find(sum) == preSumMap.end())
+        // Case 3: Store the first occurrence of prefixSum
+        if (prefixMap.find(prefixSum) == prefixMap.end())
         {
-            preSumMap[sum] = i;
+            prefixMap[prefixSum] = i;
         }
     }
 
@@ -42,9 +54,8 @@ int getLongestSubarray(vector<int> &a, int k)
 
 int main()
 {
-    vector<int> a = {-1, 1, 1};
-    int k = 1;
-    int len = getLongestSubarray(a, k);
-    cout << "The length of the longest subarray is: " << len << "\n";
+    vector<int> arr = {10, -5, 2, -3, 7, 5, -3, 1, 3};
+    int k = 7;
+    cout << "Longest Subarray Length: " << longestSubarrayWithSumK(arr, k) << endl;
     return 0;
 }
