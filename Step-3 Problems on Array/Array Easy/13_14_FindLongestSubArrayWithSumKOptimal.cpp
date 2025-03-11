@@ -1,7 +1,9 @@
 // Given an array that contains positive, negative, and zero elements, we need to find the longest subarray whose sum is exactly K.
+
 // prefixSum[i] = a[0] +a[1] +... + a[i]
 // Using the prefix sum, we can compute the sum of any subarray efficiently:
 // sum from index l to r= prefixSum[r] - prefixSum[l-1]
+
 // Dry Run Example
 // Let's dry run the array arr = {10, -5, 2, -3, 7, 5, -3, 1, 3} with K = 7.
 // Index  |	Element  |	Prefix Sum	  |     Action
@@ -16,11 +18,15 @@
 //! 8	    3	17	    Found prefixSum - K = 10 in map, maxLen = 8 - 0 = 8
 //! so the answer is 8 !!
 
-// TC & SC : O(n)
+// The approach to finding the longest subarray with sum K leverages the prefix sum technique with a hash map for efficient lookup.
+// As we traverse the array, we maintain a running sum (prefixSum). If at any index i, prefixSum itself equals K, it means the subarray from the start to i has the required sum, so we update maxLen.
+// Otherwise, we check if (prefixSum - K) exists in the hash map, which indicates that a subarray ending at i sums to K.
+// If found using the find function, we update maxLen as i - prefixMap[prefixSum - K], representing the length of the subarray with sum K.
+// If prefixSum is not already present in the map, we store its first occurrence to maximize the length of future valid subarrays.
 #include <bits/stdc++.h>
-
 using namespace std;
 
+// TC & SC : O(n)
 int longestSubarrayWithSumK(vector<int> &arr, int k)
 {
     unordered_map<int, int> prefixMap; // Stores prefixSum -> first occurrence index
