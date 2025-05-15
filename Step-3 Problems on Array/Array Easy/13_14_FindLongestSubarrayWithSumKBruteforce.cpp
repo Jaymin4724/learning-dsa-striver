@@ -1,36 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n^3)
-// SC: O(1)
-int getLongestSubarray(vector<int> &a, int k)
+// Approach : (TC : O(n^3) , SC : O(1)) Bruteforce Approach
+// - Loop through all subarrays with thre0e nested loops 
+// - Calculate sum of each subarray 
+// - Check if sum equals K and update maxLen
+int longestSubarrayWithSumK(vector<int> arr, int size, int k)
 {
-    int n = a.size(); // size of the array.
+    int maxlen = 0;
 
-    int max_len = 0;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < size; i++)
     {
-        for (int j = i; j < n; j++)
+        for (int j = i; j < size; j++)
         {
-
             int s = 0;
-            for (int K = i; K <= j; K++)
+            for (int k = i; k <= j; k++)
             {
-                s += a[K];
+                s += arr[k];
             }
-
             if (s == k)
-                max_len = max(max_len, j - i + 1);
+                maxlen = max(maxlen, j - i + 1);
         }
     }
-    return max_len;
+    return maxlen;
 }
 
 int main()
 {
-    vector<int> a = {-1, 1, 1};
-    int k = 1;
-    int len = getLongestSubarray(a, k);
-    cout << "The length of the longest subarray is: " << len << "\n";
-    return 0;
+    vector<int> arr = {1, 2, 3, 4, 5};
+    int k = 5;
+    int size = arr.size();
+    int maxlen = longestSubarrayWithSumK(arr, k, size);
+    cout << maxlen;
 }
