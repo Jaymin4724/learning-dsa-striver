@@ -16,3 +16,4 @@ void generateBinaryStrings(int n, string current = "")
     generateBinaryStrings(n, current + "0");
     generateBinaryStrings(n, current + "1");
 }
+

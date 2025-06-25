@@ -21,11 +21,11 @@ void helper(string s, int open, int close, vector<string> &answer)
         helper(s + ")", open, close - 1, answer);
 }
 
-// TC :
-// SC :
+// TC : O(Cn)
+// SC : O(n)
 vector<string> generateParenthesis(int n)
 {
     vector<string> answer;
     helper("", n, n, answer);
     return answer;
-}
+} 
