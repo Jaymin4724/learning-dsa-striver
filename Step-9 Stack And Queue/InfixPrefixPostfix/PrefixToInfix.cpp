@@ -19,11 +19,11 @@ string prefixToInfix(string &s)
         // Operator
         else
         {
-            string a = st.top(); // left
+            string b = st.top(); // left
             st.pop();
-            string b = st.top(); // right
+            string a = st.top(); // right
             st.pop();
-            string temp = "(" + a + ch + b + ")";
+            string temp = "(" + b + ch + a + ")";
             st.push(temp);
         }
     }

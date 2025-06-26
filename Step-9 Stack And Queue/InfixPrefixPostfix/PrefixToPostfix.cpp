@@ -19,11 +19,11 @@ string prefixToPostfix(string &s)
         // Operator
         else
         {
-            string a = st.top(); // left
+            string b = st.top(); // left
             st.pop();
-            string b = st.top(); // right
+            string a = st.top(); // right
             st.pop();
-            string temp = a + b + ch;
+            string temp = b + a + ch;
             st.push(temp);
         }
     }
